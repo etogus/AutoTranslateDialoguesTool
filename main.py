@@ -2,9 +2,9 @@ import requests
 
 if __name__ == '__main__':
     try:
-        IAM_TOKEN = 't1.9euelZrNj5ieyZfPzJiNk4-Sj5WQnO3rnpWazpnLxpaVnYqXlJGPypObzYrl8_cOfgBr-e9tDGJZ_t3z904sfmr5720MYln-.PybmYL0ED3JpwnNrLd7MmLkQUawQoSPtsM2UeYe9Qu7FnEOv0rTvv1Kqc4Tz9va9QJlT7VFgsDhnT5NfQyWaDQ'
+        IAM_TOKEN = 't1.9euelZrOyI-MxomPzpaOlY2cnZvPlO3rnpWazpnLxpaVnYqXlJGPypObzYrl8_dZUnxq-e9uOjEY_t3z9xkBemr57246MRj-.-cHdb7LvSaFmTJk-blrNeWUtwwsbBSRpOyqIPljBeuA0oZbTfsFrDYpnLjftzpGkiSrGIWUB1crrqk_QhYSfBw'
         folder_id = 'b1gmoi0vh9lgiadfa59f'
-        target_language = 'en'
+        target_language = 'ru'
         headers = {
             "Content-Type": "application/json",
             "Authorization": "Bearer {0}".format(IAM_TOKEN)
@@ -30,7 +30,7 @@ if __name__ == '__main__':
                             edit_line = line[index:].replace('"', "").replace('\n', "")
                         else:
                             edit_line = line[index:].replace('"', "").replace('\n', "")
-                        print(line)
+                        #print(line)
                         texts = [edit_line]
                         body = {
                             "targetLanguageCode": target_language,
@@ -38,15 +38,25 @@ if __name__ == '__main__':
                             "folderId": folder_id,
                         }
 
-                        #response = requests.post('https://translate.api.cloud.yandex.net/translate/v2/translate',
-                        #                         json=body,
-                        #                         headers=headers
-                        #                         )
+                        response = requests.post('https://translate.api.cloud.yandex.net/translate/v2/translate',
+                                                 json=body,
+                                                 headers=headers
+                                                 )
                         ru_file.write(line)
+                        #print(response.text)
+                        text_index = response.text.find("text")
+                        #print(text_index)
+                        text_index = text_index + 8
+                        #print(text_index)
+                        #print(response.text[text_index:])
+                        end_index = response.text[text_index:].find('"')
+                        #print(end_index)
+                        result_text = response.text[text_index:text_index+end_index]
+                        #print(result_text)
                         if not isAuthor:
-                            ru_file.write(" " + " " + " " + " " + name + " " + '"' + edit_line + '"' + "\n")
+                            ru_file.write(" " + " " + " " + " " + name + " " + '"' + result_text + '"' + "\n")
                         else:
-                            ru_file.write(" " + " " + " " + " " + '"' + edit_line + '"' + "\n")
+                            ru_file.write(" " + " " + " " + " " + '"' + result_text + '"' + "\n")
                 line = reader.readline()
 
     finally:
