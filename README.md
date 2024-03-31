@@ -1,6 +1,3 @@
-Данное приложение можно использовать для локализации англоязычных игр на движке Ren'Py на русский язык: 
 https://www.renpy.org/.
 
-В работе приложения участвует Yandex Translate API: https://cloud.yandex.ru/docs/translate/quickstart для перевода содержимого файла английских диалогов на русский.
-
-Необходимо выставить свой токен и папку. Инструкцию смотрите по ссылке выше.
+Yandex Translate API: https://cloud.yandex.ru/docs/translate/quickstart
